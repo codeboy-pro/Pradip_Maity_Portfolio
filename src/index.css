@@ -9,7 +9,7 @@ body {
   width: 100dvw;
   overflow: hidden;
   height: 100dvh;
-  background-image: url("/public/public/images/wallpaper.png");
+  background-image: url("/public/images/wallpaper1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -92,7 +92,7 @@ body {
     }
 
     .dock-icon {
-      @apply size-18 3xl:size-20 cursor-pointer ;
+      @apply size-15 3xl:size-20 cursor-pointer ;
 
       img {
         @apply object-cover object-center;
