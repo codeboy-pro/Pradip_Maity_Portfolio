@@ -121,7 +121,7 @@ body {
   }
 
   #safari {
-    @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-3xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     .search {
       @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2;
@@ -139,10 +139,14 @@ body {
       }
 
       .blog-post {
-        @apply grid grid-cols-12 space-x-5;
+        @apply grid grid-cols-12 gap-5;
+
+        div:first-child {
+          @apply col-span-2;
+        }
 
         img {
-          @apply size-full rounded-md object-cover;
+          @apply w-full h-auto rounded-md ;
         }
 
         .content {
@@ -353,15 +357,15 @@ body {
   }
 
   #txtfile {
-    @apply w-md absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-xl h-fit absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     h2 {
-      @apply font-bold text-sm text-center w-full;
+      @apply font-bold text-xl text-center w-full;
     }
   }
 
   #imgfile {
-    @apply w-xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-2xl absolute top-24 left-1/3 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     #window-header {
       p {
@@ -370,10 +374,10 @@ body {
     }
 
     .preview {
-      @apply p-2 bg-gray-200 max-h-[70vh];
+      @apply bg-gray-100 max-h-[75vh] flex items-center justify-center;
 
       img {
-        @apply w-full h-fit object-contain object-center;
+        @apply w-full h-full object-contain;
       }
     }
   }
