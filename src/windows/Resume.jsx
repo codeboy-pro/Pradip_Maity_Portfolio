@@ -21,7 +21,7 @@ const Resume = () => {
          </a>
     </div>
     
-     <Document file="/files/resume.pdf">
+     <Document file="public/files/resume.pdf">
         <Page pageNumber={1}
          renderTextLayer 
          renderAnnotationLayer/>

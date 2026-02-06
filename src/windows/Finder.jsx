@@ -1,15 +1,15 @@
-import { useState } from "react";
+
 import { WindowControls } from "#components";
 import { locations } from "#constants";
 import WindowWrapper from "#hoc/WindowWrapper";
 import { Search } from "lucide-react";
 import clsx from "clsx";
 import useWindowStore from "#store/window";
+import useLocationStore from "#store/location";
 
 const Finder = () => {
-    const {openWindow}=useWindowStore();
-
-  const [activeLocation, setActiveLocation] = useState(locations.work);
+  const {openWindow}=useWindowStore();
+  const { activeLocation, setActiveLocation } = useLocationStore();
 
   const renderList = (name, items) => (
     <div>
