@@ -43,8 +43,6 @@ openWindow(`${item.fileType}${item.kind}`,item);
 
 
   };
-
-
   return (
     <>
       <div id="window-header">
@@ -54,9 +52,11 @@ openWindow(`${item.fileType}${item.kind}`,item);
 
       <div className="bg-white flex h-full">
         <div className="sidebar">
-          {renderList("Favourites", Object.values(locations))};
+          {renderList("Favourites", Object.values(locations))}
 
-          {renderList("My Projects", locations.work.children)};
+       
+          {renderList("My Projects", locations.work.children)}
+
         </div>
           <ul className="content">
             {activeLocation?.children.map((item)=>(

@@ -1,58 +1,71 @@
 import { techStack } from "#constants";
 import WindowWrapper from "#hoc/WindowWrapper";
-import { Check, Flag, FlagIcon } from "lucide-react";
+import { Check, ChevronRight } from "lucide-react";
 import { WindowControls } from "#components";
 
-
 const Terminal = () => {
+  const totalItems = techStack.reduce((acc, s) => acc + s.items.length, 0);
+
   return (
-    <>
-<div id="window-header">
-<WindowControls target="terminal"/>
+    <div className="flex flex-col h-full">
+      <div className="terminal-header">
+        <WindowControls target="terminal" />
+        <h2>pradip — zsh — 80×24</h2>
+        <div />
+      </div>
 
-<h2>Tech Stack</h2>
+      <div className="terminal-body">
+        <div className="terminal-line">
+          <span className="terminal-prompt">pradip@MacBook</span>
+          <span className="terminal-path">~/portfolio</span>
+          <span className="terminal-dollar">$</span>
+          <span className="terminal-cmd">show --tech-stack</span>
+        </div>
 
-</div>  
-<div className="techstack">
-   <p>
-    <span className="font-bold"> @pradip % </span>
-    show tech Stack
-   </p>
+        <div className="terminal-output">
+          <div className="terminal-table-header">
+            <span className="terminal-col-category">CATEGORY</span>
+            <span className="terminal-col-tech">TECHNOLOGIES</span>
+          </div>
 
-   <div className="label">
-    <p className="w-32">Category</p>
-    <p >Technologies</p>
-   </div>
-   <ul className="content">
-    {techStack.map(({category,items})=>(
-        <li key={category} className="flex items-center">
-            <Check className="check" size={20} />
-            <h3>{category}</h3>
-            <ul>
-                {items.map((item,i)=>(
-                    <li key={i}>{item}{i<items.length-1?",":""}</li>
+          <div className="terminal-divider" />
+
+          {techStack.map(({ category, items }) => (
+            <div key={category} className="terminal-row">
+              <span className="terminal-category">
+                <ChevronRight size={14} className="inline text-green-400" />
+                {category}
+              </span>
+              <span className="terminal-items">
+                {items.map((item, i) => (
+                  <span key={i} className="terminal-tag">{item}</span>
                 ))}
-            </ul>
-        </li>
-    ))}
-   </ul>
-   <div className="footnote">
-<p>
-    <Check size={20} /> 5 of 5 stacks loaded successfully (100%)
-</p>
+              </span>
+            </div>
+          ))}
 
-<p className="text-black">
-    <FlagIcon size={15} fill="black"/>
-    Render time: 6ms
-</p>
-   </div>
-</div>
+          <div className="terminal-divider" />
 
-</>
-)
+          <div className="terminal-footer">
+            <p>
+              <Check size={14} className="inline text-green-400" />{" "}
+              {techStack.length} categories loaded — {totalItems} technologies found
+            </p>
+            <p className="terminal-time">✦ exec time: 0.042s</p>
+          </div>
+        </div>
+
+        <div className="terminal-line mt-4">
+          <span className="terminal-prompt">pradip@MacBook</span>
+          <span className="terminal-path">~/portfolio</span>
+          <span className="terminal-dollar">$</span>
+          <span className="terminal-cursor">▊</span>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-const  TerminalWindow=WindowWrapper(Terminal,"terminal");
-
+const TerminalWindow = WindowWrapper(Terminal, "terminal");
 
 export default TerminalWindow;
