@@ -1,11 +1,11 @@
 import { WindowControls } from "#components"
-import { blogPosts } from "#constants";
+import { codingProfiles } from "#constants";
 import WindowWrapper from "#hoc/WindowWrapper";
 import { ChevronLeft, ChevronRight, Copy, MoveRight, PanelLeft, Plus, Search, Share, ShieldHalf } from "lucide-react";
 
 const Safari = () => {
   return (
-    <>
+    <div className="flex flex-col h-full">
     <div id="window-header">
         <WindowControls target="safari"/>
 
@@ -31,19 +31,20 @@ const Safari = () => {
 </div>
     </div>
 
-    <div className="blog">
-        <h2>My Developer Blog</h2>
+    <div className="blog select-text">
+        <h2 className="text-xl font-bold text-pink-600 mb-10">Coding Profiles</h2>
         <div className="space-y-8">
-            {blogPosts.map(({id,image,title,date,link })=>(
+            {codingProfiles.map(({id,image,title,stats,link,platform })=>(
                 <div key={id} className="blog-post">
-                    <div>
-                        <img src={image} alt={title} />
+                    <div className="flex-center bg-gray-50 rounded-lg p-2">
+                        <img src={image} alt={platform} className="object-contain size-16" />
                     </div>
                     <div className="content">
-                        <p>{date}</p>
+                        <p className="font-bold text-blue-600">{platform}</p>
                         <h3>{title}</h3>
+                        <p className="text-xs text-gray-500">{stats}</p>
                         <a href={link} target="_blank" rel="noopener noreferrer">
-                            check out the full post <MoveRight className="icon"/>
+                            visit profile <MoveRight className="icon"/>
 
                         </a>
 
@@ -53,7 +54,7 @@ const Safari = () => {
             ))}
         </div>
     </div>
-    </>
+    </div>
   )
 };
 
