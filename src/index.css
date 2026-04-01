@@ -6,13 +6,24 @@
 
 html,
 body {
-  width: 100dvw;
-  overflow: hidden;
+  width: 100%;
   height: 100dvh;
+  overflow: hidden;
   background-image: url("/public/images/wallpaper1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+/* On small screens allow vertical scroll so windows/content are reachable */
+@media (max-width: 767px) {
+  html,
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100dvh;
+  }
 }
 
 @theme {
@@ -35,30 +46,67 @@ body {
 
 @layer base {
   main {
-    @apply w-dvw h-dvh overflow-hidden;
+    @apply w-full min-h-dvh overflow-hidden md:w-dvw md:h-dvh;
+    /* On mobile, allow main to grow with content */
+    @media (max-width: 767px) {
+      overflow: visible;
+      height: auto;
+    }
   }
 
   nav {
-    @apply flex justify-between items-center bg-white/50 backdrop-blur-3xl p-2 px-5 select-none;
+    @apply flex flex-wrap justify-between items-center bg-white/50 backdrop-blur-3xl p-2 px-5 select-none relative z-[9999];
 
-    div {
-      @apply flex items-center max-sm:w-full max-sm:justify-center gap-5;
-
-      &:last-child {
-        @apply max-sm:hidden;
-      }
+    .nav-left {
+      @apply flex items-center gap-3 sm:gap-5;
     }
 
-    ul {
-      @apply flex items-center gap-5 max-sm:hidden;
+    .nav-links-desktop {
+      @apply hidden sm:flex items-center gap-5;
 
       p {
         @apply text-sm cursor-pointer hover:underline transition-all;
       }
     }
 
+    .nav-right {
+      @apply hidden sm:flex items-center gap-5;
+
+      ul {
+        @apply flex items-center gap-5;
+      }
+    }
+
+    .mobile-menu-btn {
+      @apply sm:hidden p-2 rounded-md hover:bg-white/30 active:bg-white/40 transition-colors;
+    }
+
+    .mobile-menu {
+      @apply sm:hidden w-full bg-white/80 backdrop-blur-xl rounded-lg mt-2 p-3 shadow-lg border border-white/30;
+
+      ul {
+        @apply flex flex-col gap-1;
+
+        li {
+          @apply px-4 py-3 rounded-lg active:bg-white/50 cursor-pointer transition-colors;
+
+          p {
+            @apply text-sm font-medium text-gray-800;
+          }
+        }
+      }
+
+      time {
+        @apply block text-xs text-gray-500 text-center mt-2 pt-2 border-t border-gray-200;
+      }
+    }
+
     time {
       @apply text-sm font-medium text-black;
+    }
+
+    p {
+      @apply text-sm cursor-pointer hover:underline transition-all;
     }
   }
 }
@@ -69,30 +117,33 @@ body {
   }
 
   #welcome {
-    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
-
-    .small-screen {
-      @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
-
-      p {
-        @apply flex-1 text-[16px] text-center font-roboto text-gray-400;
-      }
-    }
+    @apply text-gray-200 flex flex-col justify-center items-center select-none px-6 py-20;
+    /* Mobile: static centered block; Desktop: absolute centered overlay */
+    @apply relative md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:px-10 md:py-0;
   }
 
   #dock {
-    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
+    @apply fixed bottom-0 left-1/2 -translate-x-1/2 z-50 select-none;
+    @apply w-full sm:w-auto sm:absolute sm:bottom-5;
 
     .dock-container {
-      @apply bg-white/20 backdrop-blur-xl border border-white/30 justify-between rounded-3xl px-3 py-2 flex items-end gap-3 shadow-2xl;
+      @apply bg-white/20 backdrop-blur-xl border border-white/30 flex items-end shadow-2xl;
+      /* Mobile: full-width compact bar */
+      @apply justify-around gap-1 px-2 py-1.5 rounded-none;
+      /* Desktop: centered floating pill */
+      @apply sm:justify-between sm:gap-3 sm:px-3 sm:py-2 sm:rounded-3xl;
     }
 
     .tooltip {
       @apply !py-1 !px-3 !w-fit !text-center !text-xs !rounded-md !bg-black/80 !text-white !backdrop-blur-md !border !border-white/20 !shadow-2xl;
+      /* Hide tooltips on touch — they require hover */
+      @media (pointer: coarse) {
+        display: none !important;
+      }
     }
 
     .dock-icon {
-      @apply size-12 3xl:size-16 cursor-pointer relative;
+      @apply size-10 sm:size-12 3xl:size-16 cursor-pointer relative;
 
       img {
         @apply object-contain w-full h-full drop-shadow-md;
@@ -108,7 +159,7 @@ body {
     }
     
     .dock-indicator {
-      @apply w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_white] mt-1 transition-all;
+      @apply w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-white shadow-[0_0_8px_white] mt-0.5 sm:mt-1 transition-all;
       
       &.minimized {
         @apply bg-yellow-400 shadow-[0_0_8px_#facc15] animate-pulse;
@@ -117,10 +168,18 @@ body {
   }
 
   #window-controls {
-    @apply flex gap-2;
+    @apply flex gap-2 sm:gap-2;
+
+    .control-tap-area {
+      @apply flex items-center justify-center min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 sm:p-0 cursor-pointer;
+      /* Remove button default styles */
+      background: none;
+      border: none;
+      padding: 0;
+    }
 
     .close {
-      @apply size-3.5 rounded-full bg-[#ff6157] cursor-pointer transition-all;
+      @apply size-5 sm:size-3.5 rounded-full bg-[#ff6157] transition-all;
       
       &:hover {
         @apply brightness-110;
@@ -128,7 +187,7 @@ body {
     }
 
     .minimize {
-      @apply size-3.5 rounded-full bg-[#ffc030] cursor-pointer transition-all;
+      @apply size-5 sm:size-3.5 rounded-full bg-[#ffc030] transition-all;
       
       &:hover {
         @apply brightness-110;
@@ -137,7 +196,7 @@ body {
     }
 
     .maximize {
-      @apply size-3.5 rounded-full bg-[#2acb42] transition-all;
+      @apply size-5 sm:size-3.5 rounded-full bg-[#2acb42] transition-all;
       
       &:hover {
         @apply brightness-110;
@@ -146,11 +205,68 @@ body {
   }
 
   #window-header {
-    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+    @apply flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+    /* Ensure header is never hidden */
+    flex-shrink: 0;
+  }
+
+  /* ---- Shared mobile window base ---- */
+  .mobile-window {
+    @apply fixed inset-0 flex flex-col overflow-hidden;
+    /* Base z-index above navbar (z-[9999]). No !important so inline style={{ zIndex }} from the
+       window store can stack multiple open windows correctly — latest opened wins. */
+    z-index: 10000;
+    /* Override any per-window fixed dimensions on mobile */
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    /* Add bottom padding so content isn't hidden behind the fixed dock */
+    padding-bottom: 52px;
+  }
+
+  /* Header always pinned at top of mobile window */
+  .mobile-window #window-header {
+    position: sticky !important;
+    top: 0 !important;
+    flex-shrink: 0 !important;
+    z-index: 10;
+    border-radius: 0 !important;
+    background: #f3f4f6 !important;
+    border-bottom: 1px solid #d1d5db !important;
+    padding: 0.75rem 1rem !important;
+  }
+
+  /* Content scrolls beneath pinned header */
+  .mobile-window > *:not(#window-header) {
+    flex: 1 !important;
+    min-height: 0;
+    overflow-y: auto !important;
+    height: auto !important;
+    max-height: unset !important;
+    /* Override overflow-hidden set by individual window ID styles */
+    overflow-x: hidden !important;
+  }
+
+  /* Contact: let the inner content area drive scrolling on mobile */
+  .mobile-window#contact {
+    overflow: hidden !important;
+  }
+
+  .mobile-window#contact .contact-content {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
   }
 
   #safari {
-    @apply w-2xl h-[500px] absolute top-24 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
+    @apply md:w-2xl md:h-[500px] absolute top-24 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
 
     #window-header {
       @apply flex-none;
@@ -202,7 +318,7 @@ body {
   }
 
   #terminal {
-    @apply w-[600px] h-[480px] absolute top-32 left-1/12 shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
+    @apply md:w-[600px] md:h-[480px] absolute top-32 left-1/12 shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
     background: #1e1e2e;
 
     .terminal-header {
@@ -295,7 +411,7 @@ body {
   }
 
   #contact {
-    @apply w-[850px] h-[580px] absolute top-[15%] left-[20%] bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
+    @apply md:w-[850px] md:h-[580px] absolute top-[15%] left-[20%] bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
@@ -306,12 +422,20 @@ body {
     }
 
     .contact-content {
-      @apply flex flex-1 overflow-hidden select-text;
+      @apply flex flex-col md:flex-row flex-1 overflow-y-auto select-text min-h-0;
+      /* On mobile, allow the stacked form+info to scroll freely */
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Left side - Form */
     .contact-form-section {
-      @apply flex-1 p-6 border-r border-gray-200 overflow-y-auto;
+      @apply flex-1 p-4 md:p-6 border-b md:border-b-0 md:border-r border-gray-200;
+      /* Don't double-scroll on mobile — let .contact-content scroll */
+      overflow-y: visible;
+
+      @media (min-width: 768px) {
+        overflow-y: auto;
+      }
 
       .contact-form {
         @apply space-y-4;
@@ -380,7 +504,7 @@ body {
 
     /* Right side - Info */
     .contact-info-section {
-      @apply w-64 p-6 bg-gray-50 space-y-4;
+      @apply w-full md:w-64 p-4 md:p-6 bg-gray-50 space-y-4;
 
       p {
         @apply text-sm text-gray-600;
@@ -413,7 +537,7 @@ body {
   }
 
   #photos {
-    @apply max-w-3xl absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply md:max-w-3xl absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     .sidebar {
       @apply w-3/12 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-5;
@@ -473,20 +597,24 @@ body {
   }
 
   #resume {
-    @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-full md:w-fit h-fit absolute top-16 md:left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     #window-header {
       h2 {
         @apply font-bold text-sm text-center flex-1;
       }
     }
+
+    .react-pdf__Document {
+      @apply w-full overflow-x-auto;
+    }
   }
 
   #finder {
-    @apply absolute w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl;
+    @apply absolute md:w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl;
 
     .sidebar {
-      @apply w-48 bg-gray-50 border-r border-gray-200 flex flex-col p-5 space-y-3;
+      @apply w-full sm:w-48 bg-gray-50 border-b sm:border-b-0 sm:border-r border-gray-200 flex flex-col p-3 sm:p-5 space-y-3;
 
       h3 {
         @apply text-xs font-medium text-gray-400 mb-1;
@@ -510,24 +638,24 @@ body {
     }
 
     .content {
-      @apply flex-1 p-8 bg-white max-w-2xl relative;
+      @apply flex-1 p-4 sm:p-8 bg-white sm:max-w-2xl grid grid-cols-3 sm:grid-cols-4 gap-4 sm:relative sm:flex sm:flex-wrap auto-rows-min;
 
       li {
-        @apply absolute flex items-center flex-col gap-3;
+        @apply sm:absolute flex items-center flex-col gap-2 sm:gap-3;
 
         img {
-          @apply object-contain object-center size-16 relative group-hover:scale-105;
+          @apply object-contain object-center size-12 sm:size-16 relative group-hover:scale-105;
         }
 
         p {
-          @apply text-sm text-center font-medium w-40;
+          @apply text-xs sm:text-sm text-center font-medium sm:w-40;
         }
       }
     }
   }
 
   #txtfile {
-    @apply w-xl h-fit absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply md:w-xl h-fit absolute top-36 md:right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     h2 {
       @apply font-bold text-xl text-center w-full;
@@ -535,12 +663,19 @@ body {
   }
 
   #imgfile {
-    @apply w-2xl absolute top-24 left-1/3 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply md:w-2xl absolute top-24 md:left-1/3 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
+    /* Height: cap at 80vh on desktop so portrait images don't overflow the viewport */
+    max-height: 80vh;
 
     #window-header {
       p {
         @apply font-bold text-[#5f6266];
       }
+    }
+
+    .image-content {
+      flex: 1;
+      min-height: 0;
     }
 
     .preview {
@@ -553,11 +688,20 @@ body {
   }
 
   #home {
-    @apply relative z-0 max-sm:hidden;
+    @apply relative z-0;
 
     ul {
+      @apply flex flex-wrap gap-4 p-4 justify-center sm:block sm:p-0;
+
       li {
-        @apply absolute z-0 select-none flex items-center flex-col;
+        @apply relative sm:absolute z-0 select-none flex items-center flex-col;
+
+        /* Neutralize absolute-positioning utilities on mobile flow grid */
+        @media (max-width: 639px) {
+          top: auto !important;
+          left: auto !important;
+          right: auto !important;
+        }
 
         img {
           @apply group-hover:bg-gray-950/10 p-1 rounded-md;

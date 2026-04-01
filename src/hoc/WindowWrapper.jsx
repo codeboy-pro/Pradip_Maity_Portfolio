@@ -1,8 +1,10 @@
 import useWindowStore from "#store/window";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useLayoutEffect, useRef, useEffect } from "react";
+import { useLayoutEffect, useRef, useEffect, useState } from "react";
 import { Draggable } from "gsap/Draggable";
+
+const MD_BREAKPOINT = 768;
 
 const WindowWrapper = (Component, windowKey) => {
   const Wrapped = (props) => {
@@ -14,21 +16,40 @@ const WindowWrapper = (Component, windowKey) => {
     const isAnimatingRef = useRef(false);
     const originalPositionRef = useRef({ x: 0, y: 0 });
     const windowKeyRef = useRef(windowKey);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < MD_BREAKPOINT);
+    const draggableRef = useRef(null);
+
+    // Track viewport size
+    useEffect(() => {
+      const mql = window.matchMedia(`(max-width: ${MD_BREAKPOINT - 1}px)`);
+      const handler = (e) => setIsMobile(e.matches);
+      mql.addEventListener("change", handler);
+      return () => mql.removeEventListener("change", handler);
+    }, []);
 
     useGSAP(() => {
       const el = ref.current;
       if (!el) return;
 
+      // Only enable drag on md+ screens
+      if (isMobile) {
+        if (draggableRef.current) {
+          draggableRef.current.kill();
+          draggableRef.current = null;
+        }
+        return;
+      }
+
       const [instance] = Draggable.create(el, {
         trigger: el.querySelector(".window-header"),
         onPress: () => focusWindow(windowKey),
         onDragEnd: function() {
-          // Store position after drag
           originalPositionRef.current = { x: this.x, y: this.y };
         }
       });
+      draggableRef.current = instance;
       return () => instance.kill();
-    }, []);
+    }, [isMobile]);
 
     // Handle open animation
     useGSAP(() => {
@@ -36,12 +57,30 @@ const WindowWrapper = (Component, windowKey) => {
       if (!el || !isOpen || isMinimized) return;
 
       el.style.display = "block";
-      gsap.fromTo(
-        el,
-        { scale: 0.8, opacity: 0, y: 40 },
-        { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }
-      );
-    }, [isOpen]);
+
+      if (isMobile) {
+        // On mobile, animate opacity only — no transform to avoid fighting inset-0
+        gsap.fromTo(
+          el,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.3,
+            ease: "power3.out",
+            onComplete: () => {
+              // Clear any inline transform so .mobile-window CSS takes over
+              el.style.transform = "";
+            },
+          }
+        );
+      } else {
+        gsap.fromTo(
+          el,
+          { scale: 0.8, opacity: 0, y: 40 },
+          { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }
+        );
+      }
+    }, [isOpen, isMobile]);
 
     // Handle minimize animation
     useEffect(() => {
@@ -143,17 +182,18 @@ const WindowWrapper = (Component, windowKey) => {
         isAnimatingRef.current = true;
         el.style.display = "block"; // Keep visible during animation
         
+        const animProps = isMobile
+          ? { opacity: 0, duration: 0.25, ease: "power2.in" }
+          : { scale: 0.8, opacity: 0, y: 20, duration: 0.3, ease: "power2.in" };
+
         gsap.to(el, {
-          scale: 0.8,
-          opacity: 0,
-          y: 20,
-          duration: 0.3,
-          ease: "power2.in",
+          ...animProps,
           onComplete: () => {
             el.style.display = "none";
             isAnimatingRef.current = false;
             // Reset transform for next open
             gsap.set(el, { scale: 1, opacity: 1, y: 0, x: 0, rotation: 0 });
+            el.style.transform = "";
             originalPositionRef.current = { x: 0, y: 0 };
           },
         });
@@ -178,8 +218,8 @@ const WindowWrapper = (Component, windowKey) => {
         id={windowKey}
         ref={ref}
         style={{ zIndex }}
-        className="absolute"
-        onMouseDown={() => focusWindow(windowKey)}
+        className={isMobile ? "mobile-window" : "absolute"}
+        onPointerDown={() => focusWindow(windowKey)}
       >
         <Component {...props} />
       </section>

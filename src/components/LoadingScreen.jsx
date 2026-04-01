@@ -47,7 +47,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       {/* Progress Bar Container */}
       <div
         ref={progressRef}
-        className="w-48 h-1 bg-gray-700 rounded-full overflow-hidden"
+        className="w-3/4 sm:w-48 h-1 bg-gray-700 rounded-full overflow-hidden"
       >
         {/* Progress Bar Fill */}
         <div

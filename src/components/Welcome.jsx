@@ -22,6 +22,9 @@ const FONT_WEIGHTS = {
 const setupTextHover = (container, type) => {
   if (!container) return ()=>{};
 
+  // Skip hover effect on touch devices
+  if (window.matchMedia("(pointer: coarse)").matches) return ()=>{};
+
   const letters = container.querySelectorAll("span");
   const { min, max } = FONT_WEIGHTS[type];
 
@@ -90,18 +93,14 @@ const Welcome = () => {
       <p ref={subtitleRef}>
         {renderText(
           "Hey, I'm Pradip Maity! Welcome to my ",
-          "text-3xl font-georama",
+          "text-lg sm:text-xl md:text-3xl font-georama",
           100
         )}
       </p>
 
-      <h1 ref={titleRef} className='mt-7'>
-        {renderText("portfolio", "text-9xl italic font-georama")}
+      <h1 ref={titleRef} className='mt-4 sm:mt-5 md:mt-7'>
+        {renderText("portfolio", "text-4xl sm:text-6xl md:text-9xl italic font-georama")}
       </h1>
-
-      <div className='small-screen'>
-        <p>This Portfolio is designed for desktop/tablet screens only.</p>
-      </div>
     </section>
   );
 };

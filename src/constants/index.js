@@ -236,7 +236,7 @@ const WORK_LOCATION = {
     // ▶ Project 1
     {
       id: 5,
-      name: "Nike Ecommerce Website Application",
+      name: "Spotify (songappmp3)- Music Player",
       icon: "public/images/folder.png",
       kind: "folder",
       position: "top-10 left-5", // icon position inside Finder
@@ -244,43 +244,47 @@ const WORK_LOCATION = {
       children: [
         {
           id: 1,
-          name: "Nike Project.txt",
+          name: "Spotify Project.txt",
           icon: "public/images/txt.png",
           kind: "file",
           fileType: "txt",
           position: "top-5 left-10",
           description: [
-            "The Nike eCommerce website is a sleek and modern platform designed for shopping the latest Nike collections.",
-            "Instead of a simple online store, it delivers an immersive experience with bold visuals, interactive product displays, and smooth navigation.",
-            "Think of it like walking into a flagship Nike store—but right from your phone or laptop.",
-            "It's built with Next.js and Tailwind, ensuring fast performance, responsive design, and a clean, premium look.",
+           "The Spotify Web App is a modern music streaming interface inspired by Spotify’s sleek and intuitive design.",
+
+"Rather than just playing songs, the app focuses on creating a smooth listening experience with organized playlists, responsive layouts, and a clean dark-themed UI.",
+
+"It feels like having a lightweight Spotify player directly in your browser—simple, fast, and easy to use.",
+
+"The project is built using modern web technologies like React, Next.js, and Tailwind CSS to ensure responsive design, smooth interactions, and efficient performance."
+
           ],
         },
         {
           id: 2,
-          name: "nike.com",
+          name: "songappmp3.com",
           icon: "public/images/safari.png",
           kind: "file",
           fileType: "url",
-          href: "https://youtu.be/fZdTYswuZjU?si=Awjl-pIst9e09_UU",
+          href: "https://github.com/codeboy-pro/1.mp3-Spotify-web-app",
           position: "top-10 right-20",
         },
         {
           id: 4,
-          name: "nike.png",
+          name: "Spotify.png",
           icon: "public/images/image.png",
           kind: "file",
           fileType: "img",
           position: "top-52 right-80",
-          imageUrl: "/public/images/project-1.png",
+          imageUrl: "/public/images/p-1.png",
         },
         {
           id: 5,
-          name: "Design.fig",
+          name: "Demo.live",
           icon: "public/images/plain.png",
           kind: "file",
           fileType: "fig",
-          href: "https://google.com",
+          href: "https://songappmp3.netlify.app/",
           position: "top-60 right-20",
         },
       ],
@@ -315,7 +319,7 @@ const WORK_LOCATION = {
           icon: "public/images/safari.png",
           kind: "file",
           fileType: "url",
-          href: "https://youtu.be/iYOz165wGkQ?si=R1hs8Legl200m0Cl",
+          href: "",
           position: "top-20 left-20",
         },
         {
@@ -333,7 +337,7 @@ const WORK_LOCATION = {
           icon: "public/images/plain.png",
           kind: "file",
           fileType: "fig",
-          href: "https://google.com",
+          href: "",
           position: "top-60 left-5",
         },
       ],
@@ -342,7 +346,7 @@ const WORK_LOCATION = {
     // ▶ Project 3
     {
       id: 7,
-      name: "Food Delivery App",
+      name: "scatch-Bag_shop_Auth_Project",
       icon: "/public/images/folder.png",
       kind: "folder",
       position: "top-10 left-80",
@@ -350,21 +354,25 @@ const WORK_LOCATION = {
       children: [
         {
           id: 1,
-          name: "Food Delivery App Project.txt",
+          name: "scatch-Bag_shop_Auth_Project.txt",
           icon: "/public/images/txt.png",
           kind: "file",
           fileType: "txt",
           position: "top-5 left-10",
           description: [
-            "Our Food Delivery App is a fast and convenient way to order meals from your favorite restaurants.",
-            "Instead of making calls or waiting in line, you can browse menus, customize orders, and track deliveries in real time.",
-            "Think of it like having your favorite restaurants in your pocket—ready to deliver anytime, anywhere.",
-            "It’s built with React Native, so it works smoothly on both iOS and Android with a clean, modern design.",
+            "The Bag Shop Backend is a server-side application designed to manage an online bag store with authentication and product management features.",
+
+"Instead of just storing data, the system handles user registration, login authentication, product management, and role-based flows for users and owners.",
+
+"Think of it as the engine behind an eCommerce store—securely managing users, products, and requests while keeping everything organized and efficient.",
+
+"It's built with Node.js and Express, using MongoDB for database management, JWT for authentication, bcrypt for secure password hashing, and Multer for handling product image uploads."
+
           ],
         },
         {
           id: 2,
-          name: "food-delivery-app.com",
+          name: "scatch-Bag_shop_Auth_Project.com",
           icon: "/public/images/safari.png",
           kind: "file",
           fileType: "url",
@@ -373,12 +381,12 @@ const WORK_LOCATION = {
         },
         {
           id: 4,
-          name: "food-delivery-app.png",
+          name: "scatch.png",
           icon: "/public/images/image.png",
           kind: "file",
           fileType: "img",
           position: "top-52 right-80",
-          imageUrl: "/images/project-3.png",
+          imageUrl: "/public/images/p-3.png",
         },
         {
           id: 5,
@@ -386,7 +394,7 @@ const WORK_LOCATION = {
           icon: "/public/images/plain.png",
           kind: "file",
           fileType: "fig",
-          href: "https://google.com",
+          href: "https://github.com/codeboy-pro/Backend_Making_Staff_1-scatch-Bag_shop_Auth_Project-",
           position: "top-60 right-20",
         },
       ],
@@ -408,7 +416,7 @@ const ABOUT_LOCATION = {
       kind: "file",
       fileType: "img",
       position: "top-10 left-5",
-      imageUrl: "/public/images/adrian.jpg",
+      imageUrl: "/public/images/1.jpg",
     },
     {
       id: 2,
@@ -417,7 +425,7 @@ const ABOUT_LOCATION = {
       kind: "file",
       fileType: "img",
       position: "top-28 right-72",
-      imageUrl: "/public/images/adrian-2.jpg",
+      imageUrl: "/public/images/Pradip.jpg",
     },
     {
       id: 3,
@@ -426,7 +434,7 @@ const ABOUT_LOCATION = {
       kind: "file",
       fileType: "img",
       position: "top-52 left-80",
-      imageUrl: "/public/images/adrian-3.jpeg",
+      imageUrl: "/public/images/podo.png",
     },
     {
       id: 4,
@@ -436,12 +444,20 @@ const ABOUT_LOCATION = {
       fileType: "txt",
       position: "top-60 left-5",
       subtitle: "Meet the Developer Behind the Code",
-      image: "/public/images/adrian.jpg",
+      image: "/public/images/Pradip.jpg",
       description: [
-        "Hey! I’m Adrian 👋, a web developer who enjoys building sleek, interactive websites that actually work well.",
-        "I specialize in JavaScript, React, and Next.js—and I love making things feel smooth, fast, and just a little bit delightful.",
-        "I’m big on clean UI, good UX, and writing code that doesn’t need a search party to debug.",
-        "Outside of dev work, you'll find me tweaking layouts at 2AM, sipping overpriced coffee, or impulse-buying gadgets I absolutely convinced myself I needed 😅",
+        "Hey! I’m Pradip 👋, a second-year B.Tech IT student and aspiring Software Development Engineer who enjoys solving challenging problems and building practical software.",
+
+"I spend a lot of time practicing Data Structures and Algorithms because I love breaking down complex problems and finding efficient solutions.",
+
+"I also build full-stack web projects using React, Next.js, Node.js, Express, and Tailwind CSS—focusing on clean architecture and smooth user experiences.",
+
+"Alongside development, I enjoy diving deep into core computer science subjects like DBMS, Operating Systems, OOP, and Computer Organization to understand how systems actually work under the hood.",
+
+"I’ve worked with databases like SQL and MongoDB and code primarily in C++, C, Java, JavaScript, and Python.",
+
+"When I’m not coding, you’ll probably find me exploring new tech, improving my problem-solving skills, or experimenting with ideas for my next project."
+
       ],
     },
   ],
@@ -702,7 +718,7 @@ export const locations = {
   trash: TRASH_LOCATION,
 };
 
-const INITIAL_Z_INDEX = 1000;
+const INITIAL_Z_INDEX = 10000;
 
 const WINDOW_CONFIG = {
   finder: { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },

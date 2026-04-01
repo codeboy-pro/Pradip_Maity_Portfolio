@@ -50,7 +50,7 @@ openWindow(`${item.fileType}${item.kind}`,item);
         <Search />
       </div>
 
-      <div className="bg-white flex h-full">
+      <div className="bg-white flex flex-col sm:flex-row h-full overflow-y-auto">
         <div className="sidebar">
           {renderList("Favourites", Object.values(locations))}
 
