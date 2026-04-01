@@ -70,8 +70,12 @@ const Dock = () => {
       );
     };
 
-    dock.addEventListener("mousemove", handleMouseMove);
-    dock.addEventListener("mouseleave", resetIcons);
+    // Only enable hover magnification on non-touch (pointer: fine) devices
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (!isTouch) {
+      dock.addEventListener("mousemove", handleMouseMove);
+      dock.addEventListener("mouseleave", resetIcons);
+    }
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
       dock.removeEventListener("mousemove", handleMouseMove);

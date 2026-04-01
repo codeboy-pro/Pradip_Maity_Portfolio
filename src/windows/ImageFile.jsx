@@ -19,12 +19,13 @@ const ImageFile = () => {
         <h2>{name}</h2>
       </div>
 
-      <div className="image-content bg-white flex flex-col justify-center items-center p-6 max-h-[70vh] overflow-y-auto">
+      <div className="image-content bg-white flex flex-col justify-center items-center p-4 sm:p-6" style={{flex:1, minHeight:0, overflow:'hidden'}}>
         {imageUrl && (
           <img 
             src={imageUrl} 
             alt={name} 
-            className="w-fit h-fit object-contain object-center rounded-lg shadow-md"
+            className="max-w-full max-h-full object-contain object-center rounded-lg shadow-md"
+            style={{maxHeight:'100%'}}
           />
         )}
       </div>

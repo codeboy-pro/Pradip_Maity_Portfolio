@@ -29,7 +29,7 @@ const Photos = () => {
         <h3 className="text-xl font-semibold">My Photos</h3>
         <p className="text-gray-600">Click on any photo to view it in full size.</p>
         
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {galleryImages.map((image) => (
             <div
               key={image.id}
@@ -39,7 +39,7 @@ const Photos = () => {
               <img 
                 src={image.img} 
                 alt={image.name} 
-                className="w-full h-32 object-cover"
+                className="w-full h-48 sm:h-32 object-cover"
               />
             </div>
           ))}

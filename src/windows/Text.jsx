@@ -19,12 +19,12 @@ const Text = () => {
         <h2>{name}</h2>
       </div>
 
-      <div className="text-content bg-white flex  flex-col justify-center items-center  p-6 max-h-[70vh] overflow-y-auto space-y-4">
+      <div className="text-content bg-white flex flex-col items-center p-4 sm:p-6 overflow-y-auto space-y-4">
         {image && (
           <img 
             src={image} 
             alt={name} 
-            className="w-fit  h-fit  object-cover object-center rounded-lg shadow-md"
+            className="max-h-52 sm:max-h-64 w-auto object-contain object-center rounded-xl shadow-md"
           />
         )}
 
